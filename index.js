@@ -9,18 +9,27 @@ function getLists() {
     .then(r => r.json())
     .then(lists => {
         lists.data.forEach(list => {
-            const listMarkup = `
-            <div data-id=${list.id}> 
-            <h3>${list.attributes.title}</h3>
-            </div> ` ;
-            document.querySelector('#list-container').innerHTML+= listMarkup
-
+            const list_container = document.createElement("div")
+            document.body.appendChild(list_container)
+            list_container.id = list.id
+            list_container.innerHTML+= `<h3>${list.attributes.title}</h3>`
             list.attributes.items.forEach(item => {
                 const itemsMarkup = `
-                <p>${item.description}</p>
-                `
-                document.querySelector('#list-container').innerHTML+= itemsMarkup
+                <li class="item">
+                    ${item.description}
+                </li>`
+                list_container.innerHTML+= itemsMarkup 
             })
+
+            const form_container = document.createElement("div")
+            form_container.innerHTML = `
+            <br>
+            <form id="add-item">
+            <input type="text" name="description" placeholder="Add new item">
+            <input type="submit" name="submit">
+            </form>`
+
+            list_container.appendChild(form_container)
         })
     })
 }
