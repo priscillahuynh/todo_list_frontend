@@ -25,6 +25,7 @@ function getLists() {
             form_container.innerHTML = `
             <br>
             <form id="add-item">
+            <input type="hidden", name="list_id", value="${list.id}">
             <input type="text" name="description" placeholder="Add new item">
             <input type="submit" name="submit">
             </form>`
