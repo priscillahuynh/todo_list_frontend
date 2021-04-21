@@ -16,13 +16,12 @@ function getLists() {
             list_container.id = list.attributes.title
             list_container.innerHTML+= `<h3>${list.attributes.title}</h3>`
             list.attributes.items.forEach(item => {
-                const itemsMarkup = `
+                const itemMarkup = `
                 <i class="far fa-circle"></i>
                 ${item.description}
                 <i class="fas fa-trash-alt"></i>
                 <br>` 
-                
-                list_container.innerHTML+= itemsMarkup 
+                list_container.innerHTML+= itemMarkup
             })
             
             const form_container = document.createElement("div")
@@ -35,7 +34,6 @@ function getLists() {
             <button type="submit" name="submit">Submit</button>
             </form>`
             
-            // list_container.appendChild(form_container)
             list_container.insertAdjacentElement("afterend", form_container)
         })
         itemForms = document.getElementsByClassName("add-item")
@@ -65,16 +63,19 @@ function postFetch() {
         })
     })
     .then(response => response.json())
-    .then(item => {
-        const itemData = item.data.attributes;
-        const list_container = document.getElementById(`${itemData.list.title}`)
+    .then(itemInfo => {
+        const item = itemInfo.data.attributes;
+        const list_container = document.getElementById(`${item.list.title}`)
         const itemMarkup = `
                 <i class="far fa-circle"></i>
-                ${itemData.description}
+                ${item.description}
                 <i class="fas fa-trash-alt"></i>
                 <br>` 
-        list_container.innerHTML+= itemMarkup
+                list_container.innerHTML+= itemMarkup
+        
     })
 }
+
+
 
 
