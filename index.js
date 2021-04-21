@@ -1,5 +1,5 @@
-const endPoint = "http://localhost:3000/api/v1/lists"
-
+const listsEndPoint = "http://localhost:3000/api/v1/lists"
+const itemsEndPoint = "http://localhost:3000/api/v1/items"
 
 document.addEventListener('DOMContentLoaded', () => {
     getLists()
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getLists() {
-    fetch(endPoint)
+    fetch(listsEndPoint)
     .then(r => r.json())
     .then(lists => {
         lists.data.forEach(list => {
@@ -35,7 +35,8 @@ function getLists() {
             <button type="submit" name="submit">Submit</button>
             </form>`
             
-            list_container.appendChild(form_container)
+            // list_container.appendChild(form_container)
+            list_container.insertAdjacentElement("afterend", form_container)
         })
         itemForms = document.getElementsByClassName("add-item")
         for (var i = 0; i < itemForms.length; i ++) {
@@ -47,7 +48,33 @@ function getLists() {
 
 function handleSubmit(e) {
     e.preventDefault()
-    console.log(e)
+    list_id = parseInt(e.target.elements[0].value)
+    description = e.target.elements.description.value 
+    postFetch(description, list_id)
+    e.target.reset()
+}
+
+function postFetch() {
+    console.log(description,list_id)
+    fetch(itemsEndPoint,{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            description: description,
+            list_id: list_id
+        })
+    })
+    .then(response => response.json())
+    .then(item => {
+        const itemData = item.data.attributes;
+        const list_container = document.getElementById(`${itemData.list.title}`)
+        const itemMarkup = `
+                <i class="far fa-circle"></i>
+                ${itemData.description}
+                <i class="fas fa-trash-alt"></i>
+                <br>` 
+        list_container.innerHTML+= itemMarkup
+    })
 }
 
 
