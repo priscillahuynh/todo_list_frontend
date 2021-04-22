@@ -11,7 +11,7 @@ class List {
             `
         }
 
-    renderListForm() {
+    renderNewItemForm() {
         return `
             <form class="add-item">
             <input type="hidden", name="list_id", value="${this.id}">
