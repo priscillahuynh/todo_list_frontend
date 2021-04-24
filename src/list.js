@@ -2,14 +2,20 @@ class List {
     constructor(list, listAttributes) {
         this.id = list.id
         this.title = listAttributes.title
+
+        this.element = document.createElement("div")
+        this.element.id = list.id
         List.all.push(this)
     }
 
-    renderListTitle() {
-        return `
-            <h3>${this.title}</h3>
-            `
-        }
+    renderList() {
+        this.element.innerHTML = `<h3>${this.title} </h3>`
+        document.body.appendChild(this.element)
+    }
+
+    addNewItemFormtoList() {
+        this.element.insertAdjacentHTML("afterend", this.renderNewItemForm())
+    }
 
     renderNewItemForm() {
         return `
