@@ -21,7 +21,6 @@ function renderLists(lists) {
             let newItem = new Item(item) 
             newItem.render()
         })
-        newList.addNewItemFormtoList()
     })
     let itemForms = document.getElementsByClassName("add-item")
     for (var i = 0; i < itemForms.length; i ++) {itemForms[i].addEventListener("submit", (e) => handleNewItemForm(e))}
@@ -33,6 +32,21 @@ function handleNewItemForm(e) {
     description = e.target.elements.description.value 
     postFetchItems(description, list_id)
     e.target.reset()
+}
+
+function handleDeleteItem(e){
+    const id = e.target.parentElement.id 
+    e.target.parentElement.remove()
+    const configObj = {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+    }
+    fetch(`http://localhost:3000/api/v1/items/${id}`, configObj)
+        .then(r => r.json())
+        .then(json => alert(json.message))
 }
 
 function postFetchItems() {
@@ -73,8 +87,6 @@ function postFetchLists() {
     .then(list => {
         let newList = new List(list.data, list.data.attributes)
         newList.renderList()
-        newList.addNewItemFormtoList()
-
         let itemForms = document.getElementsByClassName("add-item")
         for (var i = 0; i < itemForms.length; i ++) {itemForms[i].addEventListener("submit", (e) => handleNewItemForm(e))}
     })
