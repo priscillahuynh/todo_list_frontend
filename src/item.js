@@ -4,16 +4,18 @@ class Item {
         this.description = item.description
         this.list_id = item.list_id 
 
-        this.element = document.createElement("p")
-        this.element.id = item.description
+        this.element = document.createElement("li")
+        this.element.id = item.id
+        this.element.addEventListener("click", (e) => handleDeleteItem(e))
+
         Item.all.push(this)
+
     }
     render() {
         const list = document.getElementById(`${this.list_id}`)
         this.element.innerHTML = `
-            <i class="far fa-circle"></i>
             ${this.description}
-            <i class="fas fa-times-circle"></i>
+            <button>Delete</button>
             `
         list.appendChild(this.element)
     }
