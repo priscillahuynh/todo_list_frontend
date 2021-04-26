@@ -3,7 +3,6 @@ class Item {
         this.id = item.id 
         this.description = item.description
         this.list_id = item.list_id
-        this.list = item.list.title
 
         this.element = document.createElement("li")
         this.element.id = item.id
@@ -11,7 +10,7 @@ class Item {
     }
     
     render() {
-        const list = document.getElementById(`${this.list}`)
+        const list = document.getElementById(`${this.list_id}`)
         this.element.innerHTML = `
             ${this.description}
             <button class="delete-item">X</button>

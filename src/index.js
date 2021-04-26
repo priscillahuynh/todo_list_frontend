@@ -15,22 +15,21 @@ function getLists() {
 
 function renderLists(lists) {
     lists.data.forEach(list => {
-        debugger
-        let newList = new List(list)
-        newList.renderList()
+        new_list = new List({id:list.id,...list.attributes})
+        new_list.renderList()
         list.attributes.items.forEach(item => {
-            let newItem = new Item(item) 
-            newItem.render()
+            new_item = new Item(item)
+            new_item.render()
         })
     })
 
     list_delete_buttons = document.getElementsByClassName("delete-list")
     for (var i = 0; i < list_delete_buttons.length; i ++) {list_delete_buttons[i].addEventListener("click", (e) => handleDeleteList(e))}
 
-    let item_delete_buttons = document.getElementsByClassName("delete-item")
+    item_delete_buttons = document.getElementsByClassName("delete-item")
     for (var i = 0; i < item_delete_buttons.length; i ++) {item_delete_buttons[i].addEventListener("click", (e) => handleDeleteItem(e))}
 
-    let itemForms = document.getElementsByClassName("add-item")
+    itemForms = document.getElementsByClassName("add-item")
     for (var i = 0; i < itemForms.length; i ++) {itemForms[i].addEventListener("submit", (e) => handleNewItemForm(e))}
 }
 
@@ -53,8 +52,9 @@ function handleDeleteItem(e){
         },
     }
     fetch(`http://localhost:3000/api/v1/items/${id}`, configObj)
-        .then(r => r.json())
-        .then(json => alert(json.message))
+        // .then(r => r.json())
+        // .then(json => alert(json.message)) 
+        //for some reason json message is rendering multiple times
 }
 
 function handleDeleteList(e){
@@ -84,10 +84,14 @@ function postFetchItems() {
     })
     .then(response => response.json())
     .then(item => {
-        let itemInfo = {id: item.data.id, ...item.data.attributes}
+        let itemInfo = {id: parseInt(item.data.id), ...item.data.attributes}
         let newItem = new Item(itemInfo)
         newItem.render()
-        let item_delete_buttons = document.getElementsByClassName("delete-item")
+
+        itemForms = document.getElementsByClassName("add-item")
+        for (var i = 0; i < itemForms.length; i ++) {itemForms[i].addEventListener("submit", (e) => handleNewItemForm(e))}
+
+        item_delete_buttons = document.getElementsByClassName("delete-item")
         for (var i = 0; i < item_delete_buttons.length; i ++) {item_delete_buttons[i].addEventListener("click", (e) => handleDeleteItem(e))}
     })
 }
@@ -110,12 +114,16 @@ function postFetchLists() {
     })
     .then(response => response.json())
     .then(list => {
-        let newList = new List(list.data, list.data.attributes)
+        let newList = new List({id:parseInt(list.data.id),...list.data.attributes})
         newList.renderList()
-        let itemForms = document.getElementsByClassName("add-item")
-        for (var i = 0; i < itemForms.length; i ++) {itemForms[i].addEventListener("submit", (e) => handleNewItemForm(e))}
 
-        list_delete_buttons = document.getElementsByClassName("delete-list")
+    itemForms = document.getElementsByClassName("add-item")
+    for (var i = 0; i < itemForms.length; i ++) {itemForms[i].addEventListener("submit", (e) => handleNewItemForm(e))}
+
+    item_delete_buttons = document.getElementsByClassName("delete-item")
+    for (var i = 0; i < item_delete_buttons.length; i ++) {item_delete_buttons[i].addEventListener("click", (e) => handleDeleteItem(e))}
+
+    list_delete_buttons = document.getElementsByClassName("delete-list")
     for (var i = 0; i < list_delete_buttons.length; i ++) {list_delete_buttons[i].addEventListener("click", (e) => handleDeleteList(e))}
     })
 }
