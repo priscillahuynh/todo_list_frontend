@@ -1,30 +1,18 @@
 class List {
-    constructor(list, listAttributes) {
+    constructor(list) {
         this.id = list.id
-        this.title = listAttributes.title
+        this.title = list.title
 
         this.element = document.createElement("div")
-        this.element.id = list.id
+        this.element.id = list.title
         
         List.all.push(this)
     }
 
     renderList() {
-        this.element.innerHTML = `<h3>${this.title} </h3>`
+        this.element.innerHTML = `<h3>${this.title} <button class="delete-list">X</button></h3> `
         document.body.appendChild(this.element)
-        this.element.insertAdjacentHTML("afterend", this.renderNewItemForm())
-
     }
-
-    renderNewItemForm() {
-        return `
-            <form class="add-item">
-            <input type="hidden", name="list_id", value="${this.id}">
-            <input type="text" name="description" placeholder="Add new item">
-            <button type="submit" name="submit">Submit</button>
-            </form>
-            <br>`
-    }   
 }
 
 List.all = [];

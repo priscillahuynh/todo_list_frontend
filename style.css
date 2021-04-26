@@ -1,0 +1,39 @@
+form.add-item {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+div {
+    position: relative;
+    border: solid;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    margin: 20px;
+    max-width: 300px;
+    background-color: white;
+}
+
+div li {
+    padding-bottom: 10px;
+}
+
+div h3 {
+    display: block;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form#create-new-list {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* body {
+    background-image: url("ian-dooley-DJ7bWa-Gwks-unsplash.jpg");
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+} */
