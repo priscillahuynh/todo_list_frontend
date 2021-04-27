@@ -68,8 +68,8 @@ function handleDeleteList(e){
         },
     }
     fetch(`http://localhost:3000/api/v1/lists/${id}`, configObj)
-        .then(r => r.json())
-        .then(json => alert(json.message))
+        // .then(r => r.json())
+        // .then(json => alert(json.message))
 }
 
 function postFetchItems() {
@@ -84,6 +84,7 @@ function postFetchItems() {
     })
     .then(response => response.json())
     .then(item => {
+        // debugger
         let itemInfo = {id: parseInt(item.data.id), ...item.data.attributes}
         let newItem = new Item(itemInfo)
         newItem.render()

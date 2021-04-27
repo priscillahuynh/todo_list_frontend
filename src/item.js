@@ -10,7 +10,7 @@ class Item {
     }
     
     render() {
-        const list = document.getElementById(`${this.list_id}`)
+        const list = document.getElementById(this.list_id)
         this.element.innerHTML = `
             ${this.description}
             <button class="delete-item">X</button>
