@@ -4,7 +4,7 @@ class List {
         this.title = list.title
 
         this.element = document.createElement("div")
-        this.element.id = list.id
+        this.element.id = list.title
         
         List.all.push(this)
     }

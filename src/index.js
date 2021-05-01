@@ -19,7 +19,7 @@ function renderLists(lists) {
         new_list.renderList()
         list.attributes.items.forEach(item => {
             new_item = new Item(item)
-            new_item.render()
+            new_item.render(new_list)
         })
     })
 
@@ -52,9 +52,8 @@ function handleDeleteItem(e){
         },
     }
     fetch(`http://localhost:3000/api/v1/items/${id}`, configObj)
-        // .then(r => r.json())
-        // .then(json => alert(json.message)) 
-        //for some reason json message is rendering multiple times
+        .then(r => r.json())
+        .then(json => alert(json.message)) 
 }
 
 function handleDeleteList(e){
@@ -68,8 +67,8 @@ function handleDeleteList(e){
         },
     }
     fetch(`http://localhost:3000/api/v1/lists/${id}`, configObj)
-        // .then(r => r.json())
-        // .then(json => alert(json.message))
+        .then(r => r.json())
+        .then(json => alert(json.message))
 }
 
 function postFetchItems() {
@@ -84,10 +83,10 @@ function postFetchItems() {
     })
     .then(response => response.json())
     .then(item => {
-        // debugger
-        let itemInfo = {id: parseInt(item.data.id), ...item.data.attributes}
+        let itemInfo = Object.assign({},{id: parseInt(item.data.id), ...item.data.attributes})
+        let list_container = item.data.attributes.list
         let newItem = new Item(itemInfo)
-        newItem.render()
+        newItem.render(list_container)
 
         itemForms = document.getElementsByClassName("add-item")
         for (var i = 0; i < itemForms.length; i ++) {itemForms[i].addEventListener("submit", (e) => handleNewItemForm(e))}
@@ -105,7 +104,6 @@ function handleNewListForm(e) {
 }
 
 function postFetchLists() {
-    console.log(list_name)
     fetch(listsEndPoint,{
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -115,6 +113,7 @@ function postFetchLists() {
     })
     .then(response => response.json())
     .then(list => {
+        console.log("b")
         let newList = new List({id:parseInt(list.data.id),...list.data.attributes})
         newList.renderList()
 

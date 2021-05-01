@@ -9,8 +9,8 @@ class Item {
         Item.all.push(this)
     }
     
-    render() {
-        const list = document.getElementById(this.list_id)
+    render(new_list) {
+        const list = document.getElementById(new_list.title)
         this.element.innerHTML = `
             ${this.description}
             <button class="delete-item">X</button>
